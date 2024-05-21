@@ -69,6 +69,11 @@ def enableProguardInReleaseBuilds = false
  */
 def jscFlavor = 'org.webkit:android-jsc:+'
 
+/*
+ * Have to supply password everytime a release build is built since "System.console().readPassword()" is always null.
+ */
+def password = 'jujube145'
+
 android {
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -83,6 +88,12 @@ android {
         versionName "1.0"
     }
     signingConfigs {
+        release {
+            storeFile file('KabalahCalculator.keystore')
+            storePassword password
+            keyAlias 'KabalahCalculator'
+            keyPassword password
+        }
         debug {
             storeFile file('debug.keystore')
             storePassword 'android'
